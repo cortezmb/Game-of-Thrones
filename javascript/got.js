@@ -15,5 +15,14 @@ $(() => {
 
     .then((data) => {
         console.log(data);
+
+        let nameHtml = data.map(nameObj => {
+
+            return `<li> ${nameObj.name}</li>`
+        })
+
+        let ul = document.querySelector('ul');
+
+        ul.innerHTML = nameHtml.arr
       })
 })
