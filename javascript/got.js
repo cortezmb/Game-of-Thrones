@@ -1,10 +1,10 @@
 $(()=> {
 
     //Character Name Loop
-    var characterArr = [];    
+    var characterArr = [];   
     for (var a = 1; a < 40; a++){
 
-        characterArr.push(fetch(`https://www.anapioficeandfire.com/api/characters?page=${a}&pageSize=50`));    
+        characterArr.push(fetch(`https://www.anapioficeandfire.com/api/characters?page=${a}&pageSize=50`));             
     }
 
     Promise.all(characterArr) 
@@ -16,51 +16,50 @@ $(()=> {
     
     .then((data) => {
 
-        // console.log(data)
+        console.log(data)
         var nameArr = data.reduce(nameObj, [])
-        function nameObj(total, name){
-            return total.concat(name)
-        }        
-
+        function nameObj(total, name, allegiances){
+            return total.concat(name, allegiances)
+        }  
+        
         var html = nameArr.map(nameObj => {
-            // console.log(nameObj);
-            return `<li id="character">${nameObj.name}</li>`;
+            console.log(nameObj);
+            return `<li id="character">${nameObj.name}</li> <a>House: ${nameObj.allegiances}</a>`;
         })
         let ul = document.getElementById('name');
         ul.innerHTML = html;
     })
 
     //House Name Loop
-    var allegiancesArr = [];
-    for (var b = 1; b < 40; b++){
+    // var allegiancesArr = [];
+    // for (var b = 1; b < 40; b++){
 
-        allegiancesArr.push(fetch(`https://www.anapioficeandfire.com/api/characters?page=${b}&pageSize=50`));
-        // allegiancesArr.push(fetch(`https://www.anapioficeandfire.com/api/houses?page=${b}&pageSize=50`));
-    }    
+    //     // allegiancesArr.push(fetch(`https://www.anapioficeandfire.com/api/houses?page=${b}&pageSize=50`));
+    // }    
 
-    Promise.all(allegiancesArr)
+    // Promise.all(allegiancesArr)
 
-    .then(responses => {
+    // .then(responses => {
 
-        return Promise.all(responses.map((response) => response.json()))
-    })
+    //     return Promise.all(responses.map((response) => response.json()))
+    // })
 
-    .then((data) => {
+    // .then((data) => {
 
-        var allegiancesArr = data.reduce(allegiancesObj, []);
-        function allegiancesObj(total, allegiances){
-            console.log("allegiances");
-            return total.concat(allegiances)
-        }
+        // var allegiancesArr = data.reduce(allegiancesObj, []);
+        // function allegiancesObj(total, allegiances){
+        //     console.log("allegiances");
+        //     return total.concat(allegiances)
+        // }
 
-        var html2 = allegiancesArr.map(allegiancesObj => {
-            console.log('html');
-            return `<li>${allegiancesObj.allegiances}</li>`;
-        })
-        let li = document.getElementsByTagName('li');
-        li.appendChild = html2;
-        console.log('li');
-    })
+        // var html2 = allegiancesArr.map(allegiancesObj => {
+        //     console.log('html');
+        //     return `<li>${allegiancesObj.allegiances}</li>`;
+        // })
+        // let li = document.getElementsByTagName('character');
+        // li.appendChild = html2;
+        // console.log('li');
+    // })
 
     //Click Event
     // let getName = document.getElementById('name');
